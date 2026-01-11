@@ -1,3 +1,44 @@
-<h1>这是第25组的云计算大作业</h1><p>基于 Nginx 的静态网页实验</p>
-<p>Volume Mounting Test Success! (Updated from Host)</p>
-<h2>Hello from Version 2!</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cloud Computing Final Project - Group 25</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        .box { border: 2px dashed #007bff; padding: 20px; margin: 20px auto; width: 60%; background: #f9f9f9; }
+        h1 { color: #333; }
+        .count { color: #d9534f; font-size: 32px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>☁️ 云计算大作业 - 第25组</h1>
+    <p>微服务架构演示 (Nginx + Python Flask + Redis)</p>
+
+    <div id="api-data" class="box">
+        <h3>📡 后端通信状态</h3>
+        <p id="loading">正在连接微服务...</p>
+        <div id="content" style="display:none">
+            <p>后端消息: <span id="msg"></span></p>
+            <p>🌟 当前总访客数: <span id="hits" class="count"></span></p>
+            <p><small>服务提供者: <span id="pod"></span></small></p>
+        </div>
+    </div>
+
+    <script>
+        // 这一步是浏览器去请求 Nginx 转发给后端的 API
+        fetch('/api/hello')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                document.getElementById('msg').textContent = data.message;
+                document.getElementById('hits').textContent = data.visit_count;
+                document.getElementById('pod').textContent = data.student;
+            })
+            .catch(err => {
+                document.getElementById('loading').textContent = '连接失败: ' + err;
+                document.getElementById('loading').style.color = 'red';
+            });
+    </script>
+</body>
+</html>
